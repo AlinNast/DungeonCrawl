@@ -25,15 +25,13 @@ namespace DungeonCrawl.Actors.Characters
             if (Time > 1)
             {
                 Time = 0;
-                (int x, int y) orcPosition = (Position.x, Position.y);
 
-                var orcAtPosition = ActorManager.Singleton.GetActorAt(orcPosition);
                 List<(int i, int j)> possiblePositions = new List<(int i, int j)>();
                 possiblePositions.Add((Position.x, Position.y + 1));
                 possiblePositions.Add((Position.x, Position.y - 1));
                 possiblePositions.Add((Position.x + 1, Position.y));
                 possiblePositions.Add((Position.x - 1, Position.y));
-                while (true)
+                for (int i=0;i<4;i++)
                 {
                     int index = random.Next(0, possiblePositions.Count);
                     Debug.Log(possiblePositions[index]);
