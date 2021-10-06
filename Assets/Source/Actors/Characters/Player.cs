@@ -5,11 +5,16 @@ using DungeonCrawl.Actors.Static.Items;
 using System.Collections.Generic;
 using Assets.Source.Core;
 using System.Linq;
+using System.Data.Common;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Player : Character
     {
+        DbProviderFactory factory;
+       
+        string connectionString;
+
         public override int Health { get; set; } = 100;
         public override int Damage { get; set; } = 10;
 
@@ -66,8 +71,43 @@ namespace DungeonCrawl.Actors.Characters
                 DisplayInventory();
 
             }
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                // Save
+                Debug.Log("ceva");
+                SaveToDb();
+                
+
+            }
+            if (Input.GetKeyDown(KeyCode.F6))
+            {
+                // Load
+                LoadFromDb();
+
+            }
+
         }
 
+        public void SaveToDb()
+        {
+            
+            connectionString = "Server=(LocalDb)\\MSSQLLocalDB;Database=DcDb;Trusted_Connection=True;";
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"Insert Into player (player_name, hp, x, y) Values ('John', 100, 4, 6);";
+                command.ExecuteNonQuery();
+            }
+            UserInterface.Singleton.SetText("Game Saved!", UserInterface.TextPosition.TopLeft);
+        }
+
+        public void LoadFromDb()
+        {
+
+        }
 
         public void PickUpItem()
         {

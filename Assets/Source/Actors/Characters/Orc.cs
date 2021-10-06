@@ -34,7 +34,6 @@ namespace DungeonCrawl.Actors.Characters
                 for (int i=0;i<4;i++)
                 {
                     int index = random.Next(0, possiblePositions.Count);
-                    Debug.Log(possiblePositions[index]);
                     var pos = possiblePositions[index];
                     if (ActorManager.Singleton.GetActorAt(pos) == null)
                     {
