@@ -121,5 +121,9 @@ namespace DungeonCrawl.Core
 
             return component;
         }
+        public HashSet<Actor> GetAllActors()
+        {
+            return _allActors;
+        }
     }
 }

@@ -10,6 +10,6 @@ namespace DungeonCrawl.Actors.Static.Items
     {
         public override int DefaultSpriteId => 368;
 
-        public override string DefaultName => "BroadSword";
+        public override string DefaultName => "Sword";
     }
 }

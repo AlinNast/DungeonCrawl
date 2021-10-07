@@ -11,12 +11,12 @@ using System.Data.SqlClient;
 using System.Text;
 using System;
 using System.Configuration;
+using DungeonCrawl.Serialization;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Player : Character
     {
-
         public override int Health { get; set; } = 100;
         public override int Damage { get; set; } = 10;
 
@@ -79,7 +79,7 @@ namespace DungeonCrawl.Actors.Characters
                 Debug.Log("ceva");
                 SaveToDb();
                 
-
+            
             }
             if (Input.GetKeyDown(KeyCode.F6))
             {
@@ -87,6 +87,10 @@ namespace DungeonCrawl.Actors.Characters
                 LoadFromDb();
 
             }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                Serialize.SaveGameToFile(this);
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                Serialize.Load();
 
         }
 

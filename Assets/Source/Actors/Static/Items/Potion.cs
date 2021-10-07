@@ -10,6 +10,6 @@ namespace DungeonCrawl.Actors.Static.Items
     {
         public override int DefaultSpriteId => 568;
 
-        public override string DefaultName => "Alive-dead water Potion";
+        public override string DefaultName => "Potion";
     }
 }

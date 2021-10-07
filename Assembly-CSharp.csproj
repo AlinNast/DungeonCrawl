@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Source\Actors\Static\Wall.cs" />
+    <Compile Include="Assets\Source\Save\Serialization\GameDataToSerialize.cs" />
     <Compile Include="Assets\Source\Actors\Characters\Orc.cs" />
     <Compile Include="Assets\Source\Actors\Static\Floor.cs" />
     <Compile Include="Assets\Source\Core\CameraController.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Assets\Source\Actors\Actor.cs" />
     <Compile Include="Assets\Source\Actors\Static\Items\Sword.cs" />
     <Compile Include="Assets\Source\Actors\Characters\Player.cs" />
+    <Compile Include="Assets\Source\Save\Serialization\ActorToSerialize.cs" />
     <Compile Include="Assets\Source\Actors\Characters\Character.cs" />
     <Compile Include="Assets\Source\Actors\Characters\Boss.cs" />
     <Compile Include="Assets\CameraFollow.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Assets\Source\Actors\Static\Item.cs" />
     <Compile Include="Assets\Source\Core\GameManager.cs" />
     <Compile Include="Assets\Source\Actors\Static\Items\Potion.cs" />
+    <Compile Include="Assets\Source\Save\Serialization\Serialize.cs" />
     <Compile Include="Assets\Source\Core\ActorManager.cs" />
     <Compile Include="Assets\Source\Actors\Static\Items\Key.cs" />
   </ItemGroup>
@@ -326,6 +329,9 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.5\net35\unity-custom\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Plugins\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.2.0f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

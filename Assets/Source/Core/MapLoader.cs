@@ -1,6 +1,7 @@
 ﻿using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Static;
 using DungeonCrawl.Actors.Static.Items;
+using DungeonCrawl.Serialization;
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -12,12 +13,14 @@ namespace DungeonCrawl.Core
     /// </summary>
     public static class MapLoader
     {
+        public static int Map;
         /// <summary>
         ///     Constructs map from txt file and spawns actors at appropriate positions
         /// </summary>
         /// <param name="id"></param>
         public static void LoadMap(int id)
         {
+            Map = id;
             var lines = Regex.Split(Resources.Load<TextAsset>($"map_{id}").text, "\r\n|\r|\n");
 
             // Read map size from the first line
@@ -37,6 +40,26 @@ namespace DungeonCrawl.Core
                 }
             }
 
+            // Set default camera size and position
+            CameraController.Singleton.Size = 10;
+            CameraController.Singleton.Position = (width / 2, -height / 2);
+        }
+
+        public static void LoadMapFromGameObject(int id, GameDataToSerialize gameObject)
+        {
+            Map = id;
+            var lines = Regex.Split(Resources.Load<TextAsset>($"map_{id}").text, "\r\n|\r|\n");
+
+            // Read map size from the first line
+            var split = lines[0].Split(' ');
+            var width = int.Parse(split[0]);
+            var height = int.Parse(split[1]);
+
+            // Create actors
+            foreach(var actor in gameObject.AllActors)
+            {
+                SpawnActorFromGameObject(actor.DefaultName, (actor.x, actor.y));
+            }
             // Set default camera size and position
             CameraController.Singleton.Size = 10;
             CameraController.Singleton.Position = (width / 2, -height / 2);
@@ -84,6 +107,55 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Door>(position);
                     break;
                 case ' ':
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+
+        private static void SpawnActorFromGameObject(string defaultName, (int x, int y) position)
+        {
+            switch (defaultName)
+            {
+                case "Wall":
+                    ActorManager.Singleton.Spawn<Wall>(position);
+                    break;
+                case "Floor":
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Player":
+                    ActorManager.Singleton.Spawn<Player>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Skeleton":
+                    ActorManager.Singleton.Spawn<Skeleton>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Key":
+                    ActorManager.Singleton.Spawn<Key>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Potion":
+                    ActorManager.Singleton.Spawn<Potion>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Sword":
+                    ActorManager.Singleton.Spawn<Sword>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Orc":
+                    ActorManager.Singleton.Spawn<Orc>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Boss":
+                    ActorManager.Singleton.Spawn<Boss>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case "Door":
+                    ActorManager.Singleton.Spawn<Door>(position);
+                    break;
+                case " ":
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
