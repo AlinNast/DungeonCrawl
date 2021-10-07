@@ -5,15 +5,17 @@ using DungeonCrawl.Actors.Static.Items;
 using System.Collections.Generic;
 using Assets.Source.Core;
 using System.Linq;
+using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
+using System.Text;
+using System;
+using System.Configuration;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Player : Character
     {
-        DbProviderFactory factory;
-       
-        string connectionString;
 
         public override int Health { get; set; } = 100;
         public override int Damage { get; set; } = 10;
@@ -90,18 +92,36 @@ namespace DungeonCrawl.Actors.Characters
 
         public void SaveToDb()
         {
-            
-            connectionString = "Server=(LocalDb)\\MSSQLLocalDB;Database=DcDb;Trusted_Connection=True;";
-            using (var connection = factory.CreateConnection())
+
+
+            string connectionString = "Data Source = 127.0.0.1\\MSSQLLocalDB; Initial Catalog = DcDb; Integrated Security = True";
+            string queryString = "Insert Into player (player_name, hp, x, y) Values ('John', 100, 4, 6);";
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                connection.ConnectionString = connectionString;
-                connection.Open();
-                var command = factory.CreateCommand();
-                command.Connection = connection;
-                command.CommandText = $"Insert Into player (player_name, hp, x, y) Values ('John', 100, 4, 6);";
-                command.ExecuteNonQuery();
+                SqlCommand sqlCommand = new SqlCommand(queryString, sqlConnection);
+                try
+                {
+                    sqlConnection.Open();
+                    
+                }
+                catch (Exception e)
+                {
+
+                    throw e;
+                }
+
+                sqlCommand.ExecuteNonQuery();
+                sqlConnection.Close();
+
             }
             UserInterface.Singleton.SetText("Game Saved!", UserInterface.TextPosition.TopLeft);
+        }
+
+        public void GetPlayers()
+        {
+            var players = new List<Player>();
+            //string connectionString = "Server=(LocalDb)\\MSSQLLocalDB;Database=DcDb;Trusted_Connection=True;";
+
         }
 
         public void LoadFromDb()
